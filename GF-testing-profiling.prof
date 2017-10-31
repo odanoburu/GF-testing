@@ -1,0 +1,111 @@
+	Tue Oct 31 14:40 2017 Time and Allocation Profiling Report  (Final)
+
+	   GF-testing-profiling +RTS -N -p -s -h -i0.1 -RTS all
+
+	total time  =      102.21 secs   (102208 ticks @ 1000 us, 1 processor)
+	total alloc = 10,136,901,528 bytes  (excludes profiling overheads)
+
+COST CENTRE MODULE   SRC                                       %time %alloc
+
+mkFEAT      GrammarC grammarfeat/GrammarC.hs:(231,1)-(278,23)   96.6   93.5
+concrTypes  GrammarC grammarfeat/GrammarC.hs:47:5-14             1.6    0.0
+assertLin   Lib      src/Lib.hs:(17,1)-(26,32)                   1.2    4.6
+toGrammar   GrammarC grammarfeat/GrammarC.hs:(97,1)-(211,36)     0.4    1.7
+
+
+                                                                                                                      individual      inherited
+COST CENTRE            MODULE                SRC                                                   no.     entries  %time %alloc   %time %alloc
+
+MAIN                   MAIN                  <built-in>                                             64          0    0.1    0.0   100.0  100.0
+ CAF                   Paths_GF_testing      <entire-module>                                       127          0    0.0    0.0     0.0    0.0
+  catchIO              Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:26:1-25        133          1    0.0    0.0     0.0    0.0
+  getDataDir           Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:43:1-73        132          1    0.0    0.0     0.0    0.0
+   catchIO             Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:26:1-25        134          0    0.0    0.0     0.0    0.0
+ CAF                   Main                  <entire-module>                                       126          0    0.0    0.0     0.0    0.0
+  main                 Main                  app/Main.hs:(14,1)-(76,7)                             128          1    0.0    0.0     0.0    0.0
+   getDataFileName     Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:(48,1)-(50,29) 130          1    0.0    0.0     0.0    0.0
+ CAF                   Lib                   <entire-module>                                       125          0    0.0    0.0     0.0    0.0
+ CAF                   GrammarC              <entire-module>                                       124          0    0.0    0.0     0.0    0.0
+  mkFEAT               GrammarC              grammarfeat/GrammarC.hs:(231,1)-(278,23)              178          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.Conc.Signal       <entire-module>                                       113          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.IO.Encoding       <entire-module>                                       106          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.IO.Encoding.Iconv <entire-module>                                       104          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.IO.Handle.FD      <entire-module>                                        96          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.IO.Handle.Text    <entire-module>                                        94          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.Event.KQueue      <entire-module>                                        77          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.Event.Poll        <entire-module>                                        74          0    0.0    0.0     0.0    0.0
+ CAF                   GHC.Event.Thread      <entire-module>                                        73          0    0.0    0.0     0.0    0.0
+ main                  Main                  app/Main.hs:(14,1)-(76,7)                             129          0    0.0    0.0    99.9  100.0
+  hasArg               Lib                   src/Lib.hs:(133,1)-(135,28)                           159       2110    0.0    0.0     0.0    0.0
+  assertLin            Lib                   src/Lib.hs:(17,1)-(26,32)                             160       1622    1.2    4.6     4.2    5.2
+   featCard            GrammarC              grammarfeat/GrammarC.hs:224:1-35                      170     425168    0.0    0.0     3.0    0.5
+    feat               GrammarC              grammarfeat/GrammarC.hs:65:5-8                        171     425168    0.0    0.0     0.0    0.0
+    readGrammar        GrammarC              grammarfeat/GrammarC.hs:(214,1)-(216,27)              173          0    0.0    0.0     3.0    0.5
+     toGrammar         GrammarC              grammarfeat/GrammarC.hs:(97,1)-(211,36)               174          0    0.0    0.0     3.0    0.5
+      mkFEAT           GrammarC              grammarfeat/GrammarC.hs:(231,1)-(278,23)              175          0    3.0    0.5     3.0    0.5
+   concrTypes          GrammarC              grammarfeat/GrammarC.hs:47:5-14                       168       1622    0.0    0.0     0.0    0.0
+   name                GrammarC              grammarfeat/GrammarC.hs:45:5-8                        161       1622    0.0    0.0     0.0    0.0
+   symbols             GrammarC              grammarfeat/GrammarC.hs:64:5-11                       167       1622    0.0    0.0     0.0    0.0
+   showTree            GrammarC              grammarfeat/GrammarC.hs:(81,1)-(84,48)                189       1392    0.0    0.0     0.0    0.0
+    name               GrammarC              grammarfeat/GrammarC.hs:45:5-8                        190       2740    0.0    0.0     0.0    0.0
+   featIth             GrammarC              grammarfeat/GrammarC.hs:228:1-38                      184        627    0.0    0.0     0.0    0.0
+    feat               GrammarC              grammarfeat/GrammarC.hs:65:5-8                        185        627    0.0    0.0     0.0    0.0
+    readGrammar        GrammarC              grammarfeat/GrammarC.hs:(214,1)-(216,27)              186          0    0.0    0.0     0.0    0.0
+     toGrammar         GrammarC              grammarfeat/GrammarC.hs:(97,1)-(211,36)               187          0    0.0    0.0     0.0    0.0
+      mkFEAT           GrammarC              grammarfeat/GrammarC.hs:(231,1)-(278,23)              188          0    0.0    0.0     0.0    0.0
+   top                 GrammarC              grammarfeat/GrammarC.hs:38:10-12                      192        377    0.0    0.0     0.0    0.0
+   typ                 GrammarC              grammarfeat/GrammarC.hs:46:5-7                        191        377    0.0    0.0     0.0    0.0
+   linearize           GrammarC              grammarfeat/GrammarC.hs:56:5-13                       193        112    0.0    0.0     0.0    0.0
+   readGrammar         GrammarC              grammarfeat/GrammarC.hs:(214,1)-(216,27)              194          0    0.0    0.0     0.0    0.1
+    toGrammar          GrammarC              grammarfeat/GrammarC.hs:(97,1)-(211,36)               195          0    0.0    0.0     0.0    0.1
+     name              GrammarC              grammarfeat/GrammarC.hs:45:5-8                        202       4088    0.0    0.0     0.0    0.0
+     mkApp             PGF2.Expr             PGF2/Expr.hsc:(72,1)-(84,21)                          201       2740    0.0    0.0     0.0    0.0
+      expr             PGF2.Expr             PGF2/Expr.hsc:27:19-22                                203       2363    0.0    0.0     0.0    0.0
+     linearize         PGF2                  PGF2.hsc:(752,1)-(770,36)                             196        377    0.0    0.0     0.0    0.0
+      concr            PGF2.FFI              PGF2/FFI.hsc:25:21-25                                 199        377    0.0    0.0     0.0    0.0
+      expr             PGF2.Expr             PGF2/Expr.hsc:27:19-22                                200        377    0.0    0.0     0.0    0.0
+      touchExpr        PGF2.Expr             PGF2/Expr.hsc:27:36-44                                204        377    0.0    0.0     0.0    0.0
+      withGuPool       PGF2.FFI              PGF2/FFI.hsc:156:1-49                                 197        377    0.0    0.0     0.0    0.0
+       newOut          PGF2.FFI              PGF2/FFI.hsc:(159,1)-(162,21)                         198        377    0.0    0.0     0.0    0.0
+       peekUtf8CString PGF2.FFI              PGF2/FFI.hsc:(165,1)-(174,53)                         207        377    0.0    0.0     0.0    0.0
+       mkApp           PGF2.Expr             PGF2/Expr.hsc:(72,1)-(84,21)                          205          0    0.0    0.0     0.0    0.0
+        touchExpr      PGF2.Expr             PGF2/Expr.hsc:27:36-44                                206       2363    0.0    0.0     0.0    0.0
+  main.\               Main                  app/Main.hs:19:31-37                                  151         86    0.0    0.0     0.0    0.0
+  concrCats            GrammarC              grammarfeat/GrammarC.hs:59:5-13                       142          1    0.0    0.0     0.0    0.0
+  readGrammar          GrammarC              grammarfeat/GrammarC.hs:(214,1)-(216,27)              137          1    0.0    0.0    95.7   94.8
+   readPGF             PGF2                  PGF2.hsc:(117,1)-(150,51)                             138          1    0.0    0.0     0.0    0.0
+    peekUtf8CString    PGF2.FFI              PGF2/FFI.hsc:(165,1)-(174,53)                         140          1    0.0    0.0     0.0    0.0
+    withGuPool         PGF2.FFI              PGF2/FFI.hsc:156:1-49                                 139          1    0.0    0.0     0.0    0.0
+   toGrammar           GrammarC              grammarfeat/GrammarC.hs:(97,1)-(211,36)               141          1    0.4    1.7    95.7   94.8
+    concrProductions   PGF2.Internal         PGF2/Internal.hsc:(192,1)-(227,33)                    154       5375    0.0    0.0     0.0    0.1
+     peekSequence      PGF2.FFI              PGF2/FFI.hsc:(219,1)-(227,20)                         158      88652    0.0    0.1     0.0    0.1
+     concr             PGF2.FFI              PGF2/FFI.hsc:25:21-25                                 155       5375    0.0    0.0     0.0    0.0
+     touchConcr        PGF2.FFI              PGF2/FFI.hsc:25:44-53                                 156       5375    0.0    0.0     0.0    0.0
+     readPGF           PGF2                  PGF2.hsc:(117,1)-(150,51)                             157          0    0.0    0.0     0.0    0.0
+    concrFunction      PGF2.Internal         PGF2/Internal.hsc:(241,1)-(257,53)                    162       1668    0.0    0.0     0.0    0.0
+     concr             PGF2.FFI              PGF2/FFI.hsc:25:21-25                                 163       3336    0.0    0.0     0.0    0.0
+     peekUtf8CString   PGF2.FFI              PGF2/FFI.hsc:(165,1)-(174,53)                         164       1668    0.0    0.0     0.0    0.0
+     touchConcr        PGF2.FFI              PGF2/FFI.hsc:25:44-53                                 165       1668    0.0    0.0     0.0    0.0
+     readPGF           PGF2                  PGF2.hsc:(117,1)-(150,51)                             166          0    0.0    0.0     0.0    0.0
+    abstrCat           GrammarC              grammarfeat/GrammarC.hs:(32,1)-(33,32)                169        882    0.0    0.0     0.0    0.0
+    concrCategories    PGF2.Internal         PGF2/Internal.hsc:(163,1)-(189,55)                    143          1    0.0    0.0     0.0    0.0
+     concr             PGF2.FFI              PGF2/FFI.hsc:25:21-25                                 145          1    0.0    0.0     0.0    0.0
+     touchConcr        PGF2.FFI              PGF2/FFI.hsc:25:44-53                                 149          1    0.0    0.0     0.0    0.0
+     withGuPool        PGF2.FFI              PGF2/FFI.hsc:156:1-49                                 144          1    0.0    0.0     0.0    0.0
+      peekUtf8CString  PGF2.FFI              PGF2/FFI.hsc:(165,1)-(174,53)                         148        841    0.0    0.0     0.0    0.0
+      readPGF          PGF2                  PGF2.hsc:(117,1)-(150,51)                             150          0    0.0    0.0     0.0    0.0
+    concrCats          GrammarC              grammarfeat/GrammarC.hs:59:5-13                       153          1    0.0    0.0     0.0    0.0
+    concrTotalCats     PGF2.Internal         PGF2/Internal.hsc:(157,1)-(160,46)                    180          1    0.0    0.0     0.0    0.0
+     concr             PGF2.FFI              PGF2/FFI.hsc:25:21-25                                 181          1    0.0    0.0     0.0    0.0
+     touchConcr        PGF2.FFI              PGF2/FFI.hsc:25:44-53                                 182          1    0.0    0.0     0.0    0.0
+     readPGF           PGF2                  PGF2.hsc:(117,1)-(150,51)                             183          0    0.0    0.0     0.0    0.0
+    languages          PGF2                  PGF2.hsc:166:1-21                                     146          1    0.0    0.0     0.0    0.0
+     langs             PGF2.FFI              PGF2/FFI.hsc:24:36-40                                 147          1    0.0    0.0     0.0    0.0
+    mkFEAT             GrammarC              grammarfeat/GrammarC.hs:(231,1)-(278,23)              172          1   93.7   92.9    95.2   92.9
+     concrTypes        GrammarC              grammarfeat/GrammarC.hs:47:5-14                       177   88679080    1.6    0.0     1.6    0.0
+     coercions         GrammarC              grammarfeat/GrammarC.hs:62:5-13                       179          2    0.0    0.0     0.0    0.0
+     symbols           GrammarC              grammarfeat/GrammarC.hs:64:5-11                       176          2    0.0    0.0     0.0    0.0
+  symbols              GrammarC              grammarfeat/GrammarC.hs:64:5-11                       152          1    0.0    0.0     0.0    0.0
+  getDataFileName      Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:(48,1)-(50,29) 131          0    0.0    0.0     0.0    0.0
+   getDataDir          Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:43:1-73        135          0    0.0    0.0     0.0    0.0
+    catchIO            Paths_GF_testing      dist/build/autogen/Paths_GF_testing.hs:26:1-25        136          0    0.0    0.0     0.0    0.0
