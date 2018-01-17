@@ -17,13 +17,6 @@ import Data.Maybe
 import Data.Tuple ( swap )
 import Debug.Trace
 
------- Move this to GrammarC
---import qualified PGF2
-
---readTree :: Grammar -> String -> Tree
---readTree
-
------------------------------
 
 testFun :: Bool -> Grammar -> String -> IO ()
 testFun debug gr funname = sequence_
