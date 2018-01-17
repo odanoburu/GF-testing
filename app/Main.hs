@@ -18,17 +18,21 @@ main = do
 
   let debug = "d" `elem` args
   let compareWithOld = "cwo" `elem` args
+  let useTreebank = "tb" `elem` args
 
   grName <- getDataFileName "TestLang.pgf" 
   gr <- readGrammar grName
   grOld <- if compareWithOld
              then readGrammar =<< getDataFileName "TestLangOld.pgf"
              else return gr
-
+  treebank <- if useTreebank 
+                then lines `fmap` (readFile =<< getDataFileName "treebank.txt")
+                else return []
 
 
   case args of 
 
+    ("parse":_) -> print $ parse gr "ik ben een hond"
     ("all":_) -> sequence_ $ take 5
       [ testFun debug gr (show symb)
          | symb <- symbols gr ]

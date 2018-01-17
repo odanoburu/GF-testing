@@ -61,8 +61,8 @@ isHole _                   = False
 data Grammar
   = Grammar
   {
-  -- parse        :: String -> [Tree]
-    linearize    :: Tree -> String
+    parse        :: String -> [Tree]
+  , linearize    :: Tree -> String
   , linearizeAll :: Tree -> [String]
   , tabularLin   :: Tree -> [(String,String)]
   , concrCats    :: [(PGF2.Cat,I.FId,I.FId,[String])]
@@ -219,13 +219,13 @@ toGrammar pgf =
   let gr =
         Grammar
         {
-         --parse = \s ->
-         --   case PGF2.parse lang (PGF2.startCat pgf) s of 
-         --     PGF2.ParseOk es_fs -> map (mkTree.fst) es_fs
-         --     PGF2.ParseFailed i s -> error s
-         --     PGF2.ParseIncomplete -> error "Incomplete parse"
+         parse = \s ->
+            case PGF2.parse lang (PGF2.startCat pgf) s of 
+              PGF2.ParseOk es_fs -> map (mkTree.fst) es_fs
+              PGF2.ParseFailed i s -> error s
+              PGF2.ParseIncomplete -> error "Incomplete parse"
 
-          linearize = \t ->
+        , linearize = \t ->
             PGF2.linearize lang (mkExpr t)
 
         , linearizeAll = \t -> 
@@ -239,19 +239,8 @@ toGrammar pgf =
 
         , concrCats = I.concrCategories lang
 
-        , symbols = 
-           [ Symbol { 
-               name = nm,
-               seqs = sqs,
-               ctyp = (cArgTypes, cResType),
-               typ = (map abstrCat cArgTypes, abstrCat cResType) } --this takes care of coercions
+        , symbols = symbs
 
-             | (cat,bg,end,_) <- concrCats gr 
-             , resFid <- [bg..end] 
-             , I.PApply funId pargs <- I.concrProductions lang resFid
-             , let cArgTypes = [ CC (getGFCat fid) fid | I.PArg _ fid <- pargs ]
-             , let cResType = CC (getGFCat resFid) resFid 
-             , let (nm,sqs) = I.concrFunction lang funId ]
 
         , coercions = coerces
 
@@ -262,6 +251,18 @@ toGrammar pgf =
         }
    in gr
  where
+  symbs = [ Symbol { 
+               name = nm,
+               seqs = sqs,
+               ctyp = (cArgTypes, cResType),
+               typ = (map abstrCat cArgTypes, abstrCat cResType) } --this takes care of coercions
+
+             | (cat,bg,end,_) <- I.concrCategories lang
+             , resFid <- [bg..end] 
+             , I.PApply funId pargs <- I.concrProductions lang resFid
+             , let cArgTypes = [ CC (getGFCat fid) fid | I.PArg _ fid <- pargs ]
+             , let cResType = CC (getGFCat resFid) resFid 
+             , let (nm,sqs) = I.concrFunction lang funId ]
 
   cseq2Either (I.SymKS tok) = Left tok
   cseq2Either (I.SymCat x y) = Right (x,y)
@@ -291,8 +292,9 @@ toGrammar pgf =
           (x:xs) -> Just x
 
 -- Only needed for parse. If we need it, find out what to put in ctyp of Symbol.
-{-
-  mkSymbol f = Symbol f ([mkCat x | (_,_,x) <- xs],y) [????]
+  mkSymbol :: Name -> Symbol
+  mkSymbol f = head $ lookupSymbs f
+--    Symbol f [] ([mkCat x | (_,_,x) <- xs],y) [????]
    where
     Just ft    = PGF2.functionType pgf f -- functionType :: PGF -> Fun -> Maybe Type
     (xs, y, _) = PGF2.unType ft
@@ -302,7 +304,7 @@ toGrammar pgf =
    case PGF2.unApp t of
      Just (f,xs) -> App (mkSymbol f) [ mkTree x | x <- xs ]
      _           -> error (PGF2.showExpr [] t)
--}  
+  
   mkExpr (App n []) | not (null s) && all isDigit s =
     PGF2.mkInt (read s)
    where
@@ -313,6 +315,15 @@ toGrammar pgf =
   
   mkCat  tp  = cat where (_, cat, _) = PGF2.unType tp
   mkType cat = PGF2.mkType [] cat []
+
+  lookupSymbs :: Name -> [Symbol]
+  lookupSymbs name = 
+    lookupAll (map symb2table symbs) name
+ 
+  symb2table s@(Symbol nm _ _ _) = (nm,s)
+
+  lookupAll :: (Eq a) => [(a,b)] -> a -> [b]
+  lookupAll kvs key = [ v | (k,v) <- kvs, k==key ]
 
 readGrammar :: FilePath -> IO Grammar
 readGrammar file =

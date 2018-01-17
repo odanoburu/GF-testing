@@ -4,6 +4,7 @@ module Lib
     , treesUsingFun
     , showConcrFun
     , lookupSymbols
+--    , readTree
     ) where
 
 import GrammarC
@@ -15,6 +16,14 @@ import qualified Data.Set as S
 import Data.Maybe
 import Data.Tuple ( swap )
 import Debug.Trace
+
+------ Move this to GrammarC
+--import qualified PGF2
+
+--readTree :: Grammar -> String -> Tree
+--readTree
+
+-----------------------------
 
 testFun :: Bool -> Grammar -> String -> IO ()
 testFun debug gr funname = sequence_
@@ -28,6 +37,7 @@ testTree debug gr t =
      when debug $ putStrLn (intercalate "\n" (tabularPrint gr t))
      putStr $ unlines $ concat $
        [ [ ""
+         , linearize gr t
          , "- "     ++ show (ctx (App (hole c) []))
          , "  --> " ++ linearize gr (ctx (App (hole c) []))
          , "  --> " ++ linearize gr (ctx t)
@@ -118,7 +128,7 @@ bestExamples fun gr vtrees = go [] vtrees_lins
   go cur []  = map fst cur
   go cur (vt@(ts,lins):vts) 
     | any (`testsAsWellAs` lins) (map snd cur) = go cur vts
-    | otherwise = go' (vt:[ c | c@(_,clins) <- cur
+    | otherwise = go' (vt:[ c |  c@(_,clins) <- cur
                               , not (lins `testsAsWellAs` clins) ])
                       vts
 
